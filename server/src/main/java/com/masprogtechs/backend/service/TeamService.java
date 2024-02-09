@@ -7,6 +7,7 @@ import com.masprogtechs.backend.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,28 @@ public class TeamService {
 
         Team team = new Team(teamRequestDTO);
         return teamRepository.save(team);
+    }
 
+
+    public Team updateTeam(TeamRequestDTO teamRequestDTO) {
+
+        if(teamRequestDTO.getName().isEmpty()
+                || teamRequestDTO.getState().isEmpty()
+                || teamRequestDTO.getPhotoUrl().isEmpty()) {
+            return null;
+        }
+
+        Team team = new Team(teamRequestDTO);
+        return teamRepository.save(team);
+    }
+
+    public void deleteTeam(Long id) {
+        Team team = teamRepository.findById(id).orElse(null);
+
+        if (team == null) {
+            throw new RuntimeException(String.format("Recurso %s não encontrado", id));
+        }
+
+        teamRepository.deleteById(id);
     }
 }
