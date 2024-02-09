@@ -25,4 +25,15 @@ public class TeamService {
         return response.map(TeamResponseDTO::new).orElseThrow(() ->new RuntimeException("ID não encontrado!"));
     }
 
+    public Team registerTeam(TeamRequestDTO teamRequestDTO) {
+        if(teamRequestDTO.getName().isEmpty()
+                || teamRequestDTO.getState().isEmpty()
+                || teamRequestDTO.getPhotoUrl().isEmpty()) {
+            return null;
+        }
+
+        Team team = new Team(teamRequestDTO);
+        return teamRepository.save(team);
+
+    }
 }
