@@ -15,27 +15,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MatchController {
     private final MatchService matchService;
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/all")
     public List<Match> getAllMatches() {
         return matchService.getAllMatches();
     }
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/{id}")
     public ResponseEntity<MatchResponseDTO> getMatchById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(matchService.getMatchById(id));
     }
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<Match> addMatch(@RequestBody MatchRequestDTO matchRequestDTO) {
         return ResponseEntity.ok(matchService.registerMatch(matchRequestDTO));
     }
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping
     public ResponseEntity<Match> updateMatch(@RequestBody MatchRequestDTO matchRequestDTO) {
         return ResponseEntity.ok(matchService.updateMatch(matchRequestDTO));
     }
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMatch(@PathVariable Long id) {
         matchService.deleteMatch(id);
