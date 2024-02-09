@@ -31,5 +31,16 @@ public class TeamController {
         return ResponseEntity.ok(teamService.registerTeam(teamRequestDTO));
     }
 
+    @PutMapping
+    public ResponseEntity<Team> updateTeam(@RequestBody TeamRequestDTO teamRequestDTO) {
+        return ResponseEntity.ok(teamService.updateTeam(teamRequestDTO));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteResource(@PathVariable Long id) {
+        teamService.deleteTeam(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
