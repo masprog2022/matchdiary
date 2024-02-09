@@ -31,4 +31,15 @@ public class MatchController {
         return ResponseEntity.ok(matchService.registerMatch(matchRequestDTO));
     }
 
+    @PutMapping
+    public ResponseEntity<Match> updateMatch(@RequestBody MatchRequestDTO matchRequestDTO) {
+        return ResponseEntity.ok(matchService.updateMatch(matchRequestDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMatch(@PathVariable Long id) {
+        matchService.deleteMatch(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
