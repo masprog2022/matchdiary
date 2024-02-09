@@ -36,8 +36,8 @@ public class TeamController {
         return ResponseEntity.ok(teamService.updateTeam(teamRequestDTO));
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteResource(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTeam(@PathVariable Long id) {
         teamService.deleteTeam(id);
         return ResponseEntity.noContent().build();
     }
