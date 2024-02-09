@@ -31,7 +31,7 @@ public class MatchService {
         return response.map(MatchResponseDTO::new).orElseThrow(() ->new EntityRuntimeException(String.format("Partida %s não encontrada", id)));
     }
 
-    public Match registerMatch(final MatchRequestDTO matchRequestDTO) {
+    public Match registerMatch(MatchRequestDTO matchRequestDTO) {
         if(matchRequestDTO.getScoreTeamOne().toString().isEmpty() ||
                 matchRequestDTO.getScoreTeamTwo().toString().isEmpty() ||
                 matchRequestDTO.getSupportedTeamId().toString().isEmpty() ||
@@ -52,11 +52,50 @@ public class MatchService {
 
         matchRequestDTO.setDate(formattedDate);
 
-        Team teamOne = teamRepository.findById(matchRequestDTO.getTeamOneId()).orElseThrow(() -> new IllegalArgumentException("Time 1 não encontrado"));
-        Team teamTwo = teamRepository.findById(matchRequestDTO.getTeamTwoId()).orElseThrow(() -> new IllegalArgumentException("Time 2 não encontrado"));
-        Team supportedTeam = teamRepository.findById(matchRequestDTO.getSupportedTeamId()).orElseThrow(() -> new IllegalArgumentException("Time de torcida não encontrado"));
+        Team teamOne = teamRepository.findById(matchRequestDTO.getTeamOneId()).orElseThrow(() -> new EntityRuntimeException("Equipe 1 não encontrado"));
+        Team teamTwo = teamRepository.findById(matchRequestDTO.getTeamTwoId()).orElseThrow(() -> new EntityRuntimeException("Equipe 2 não encontrado"));
+        Team supportedTeam = teamRepository.findById(matchRequestDTO.getSupportedTeamId()).orElseThrow(() -> new EntityRuntimeException("Equipe de torcida não encontrado"));
 
         Match match = new Match(matchRequestDTO, teamOne, teamTwo, supportedTeam);
         return matchRepository.save(match);
+    }
+
+    public Match updateMatch(MatchRequestDTO matchRequestDTO) {
+        if(matchRequestDTO.getScoreTeamOne().toString().isEmpty() ||
+                matchRequestDTO.getScoreTeamTwo().toString().isEmpty() ||
+                matchRequestDTO.getSupportedTeamId().toString().isEmpty() ||
+                matchRequestDTO.getTeamOneId().toString().isEmpty() ||
+                matchRequestDTO.getTeamTwoId().toString().isEmpty()
+        ) {
+            return null;
+        }
+
+        if(matchRequestDTO.getTeamOneId().equals(matchRequestDTO.getTeamTwoId())) {
+            return null;
+        }
+
+        Date formattedDate = matchRequestDTO.getDate();
+        formattedDate.setHours(0);
+        formattedDate.setMinutes(0);
+        formattedDate.setSeconds(0);
+
+        matchRequestDTO.setDate(formattedDate);
+
+        Team teamOne = teamRepository.findById(matchRequestDTO.getTeamOneId()).orElseThrow(() -> new EntityRuntimeException("Equipe 1 não encontrado"));
+        Team teamTwo = teamRepository.findById(matchRequestDTO.getTeamTwoId()).orElseThrow(() -> new EntityRuntimeException("Equipe 2 não encontrado"));
+        Team supportedTeam = teamRepository.findById(matchRequestDTO.getSupportedTeamId()).orElseThrow(() -> new EntityRuntimeException("Equipe de torcida não encontrado"));
+
+        Match match = new Match(matchRequestDTO, teamOne, teamTwo, supportedTeam);
+        return matchRepository.save(match);
+    }
+
+    public void deleteMatch(Long id) {
+        Match match = matchRepository.findById(id).orElse(null);
+
+        if (match == null) {
+            throw new EntityRuntimeException(String.format("Partida %s não encontrada para ser removida", id));
+        }
+
+        matchRepository.deleteById(id);
     }
 }
