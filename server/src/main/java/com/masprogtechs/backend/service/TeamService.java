@@ -2,6 +2,7 @@ package com.masprogtechs.backend.service;
 
 import com.masprogtechs.backend.dto.team.TeamRequestDTO;
 import com.masprogtechs.backend.dto.team.TeamResponseDTO;
+import com.masprogtechs.backend.exception.EntityRuntimeException;
 import com.masprogtechs.backend.model.Team;
 import com.masprogtechs.backend.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class TeamService {
 
     public TeamResponseDTO getTeamById(Long id) {
         Optional<Team> response = teamRepository.findById(id);
-        return response.map(TeamResponseDTO::new).orElseThrow(() ->new RuntimeException("ID não encontrado!"));
+        return response.map(TeamResponseDTO::new).orElseThrow(() ->new EntityRuntimeException(String.format("Equipe %s não encontrada", id)));
     }
 
     public Team registerTeam(TeamRequestDTO teamRequestDTO) {
@@ -54,7 +55,7 @@ public class TeamService {
         Team team = teamRepository.findById(id).orElse(null);
 
         if (team == null) {
-            throw new RuntimeException(String.format("Recurso %s não encontrado", id));
+            throw new EntityRuntimeException(String.format("Equipe %s não encontrada para ser removida", id));
         }
 
         teamRepository.deleteById(id);
