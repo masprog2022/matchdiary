@@ -1,14 +1,12 @@
 package com.masprogtechs.backend.controller;
 
+import com.masprogtechs.backend.dto.team.TeamRequestDTO;
 import com.masprogtechs.backend.dto.team.TeamResponseDTO;
 import com.masprogtechs.backend.model.Team;
 import com.masprogtechs.backend.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +24,11 @@ public class TeamController {
     @GetMapping("/{id}")
     public ResponseEntity<TeamResponseDTO> getTeamById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(teamService.getTeamById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<Team> addTeam(@RequestBody TeamRequestDTO teamRequestDTO) {
+        return ResponseEntity.ok(teamService.registerTeam(teamRequestDTO));
     }
 
 
