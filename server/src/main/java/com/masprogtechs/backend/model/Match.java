@@ -8,6 +8,7 @@ import java.util.Date;
 
 
 @Table(name = "match")
+@Entity(name = "match")
 @Getter
 @Setter
 @NoArgsConstructor
