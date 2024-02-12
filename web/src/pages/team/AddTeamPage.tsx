@@ -1,3 +1,9 @@
-export const AddTeamPage = () => {
-  return <div>AddTeamPage</div>;
-};
+import { Navbar } from "../../components/Navbar";
+
+export default function AddTeamPage() {
+  return (
+    <>
+      <Navbar />
+    </>
+  );
+}

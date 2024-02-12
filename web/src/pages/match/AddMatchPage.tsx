@@ -1,3 +1,9 @@
-export const AddMatchPage = () => {
-  return <div>AddMatchPage</div>;
-};
+import { Navbar } from "../../components/Navbar";
+
+export default function AddMatchPage() {
+  return (
+    <>
+      <Navbar />
+    </>
+  );
+}

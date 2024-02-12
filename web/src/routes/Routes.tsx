@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AddMatchPage } from "../pages/match/AddMatchPage";
-import { EditMatchPage } from "../pages/match/EditMatchPage";
-import { MatchListPage } from "../pages/match/MatchListPage";
-import { ReportsPage } from "../pages/reports/ReportsPage";
-import { AddTeamPage } from "../pages/team/AddTeamPage";
-import { EditTeamPage } from "../pages/team/EditTeamPage";
-import { TeamListPage } from "../pages/team/TeamListPage";
+import AddMatchPage from "../pages/match/AddMatchPage";
+import EditMatchPage from "../pages/match/EditMatchPage";
+import MatchListPage from "../pages/match/MatchListPage";
+import ReportsPage from "../pages/reports/ReportsPage";
+import AddTeamPage from "../pages/team/AddTeamPage";
+import EditTeamPage from "../pages/team/EditTeamPage";
+import TeamListPage from "../pages/team/TeamListPage";
 
 export default function AllRoutes() {
   return (
