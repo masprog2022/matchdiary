@@ -1,30 +1,58 @@
+import { useEffect, useState } from "react";
 import BiggerCard from "../../components/BiggerCard";
 import Card from "../../components/Card";
 import CardContainer from "../../components/CardContainer";
 import Container from "../../components/Container";
 import { Navbar } from "../../components/Navbar";
 import Title from "../../components/Title";
+import { ReportsData } from "../../interfaces/ReportsData";
+import api from "../../services/api";
 
 export default function ReportsPage() {
+  const [data, setData] = useState<ReportsData>();
+  const [days, setDays] = useState<string>("0 dias");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.getReportsData();
+        setData(response.data);
+
+        if (
+          response.data.daysWithoutWatching > 1 ||
+          response.data.daysWithoutWatching === 0
+        ) {
+          setDays(response.data.daysWithoutWatching + " dias");
+        } else {
+          setDays(response.data.daysWithoutWatching + " dia");
+        }
+      } catch (error) {
+        console.log("Erro ao buscar dados do resumo:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <Navbar />
       <Container>
         <Title title="O resumo do seu diário de torcedor!" />
         <CardContainer>
-          <Card value="89" description="partidas" />
-          <Card value="43" description="vitórias" />
-          <Card value="48%" description="de aproveitamento" />
+          <Card value={data?.matchesQuantity} description="partidas" />
+          <Card value={data?.winsQuantity} description="vitórias" />
+          <Card
+            value={data ? data.winPercentage + "%" : "0%"}
+            description="de aproveitamento"
+          />
 
           <BiggerCard
-            teamUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Flamengo_braz_logo.svg/800px-Flamengo_braz_logo.svg.png"
-            teamName="Flamengo"
+            teamUrl={data?.mostWatchedTeam.photoUrl}
+            teamName={data?.mostWatchedTeam.name}
             description="o time que você mais acompanha!"
           />
-          <BiggerCard
-            value="12 dias"
-            description="sem acompanhar uma partida"
-          />
+          <BiggerCard value={days} description="sem acompanhar uma partida" />
         </CardContainer>
       </Container>
     </>
