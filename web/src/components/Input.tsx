@@ -34,10 +34,6 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-}
-
 export default function Input(props: InputProps) {
   return (
     <InputDiv>
