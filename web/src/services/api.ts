@@ -7,6 +7,7 @@ interface Api {
   getReportsData: () => Promise<AxiosResponse<ReportsData>>;
   deleteTeam: (id: number) => Promise<AxiosResponse<any>>;
   getTeamData: () => Promise<AxiosResponse<TeamData[]>>;
+  addTeam: (teamData: TeamData) => Promise<AxiosResponse<any>>;
   getMatchData: () => Promise<AxiosResponse<MatchData[]>>;
   deleteMatch: (id: number) => Promise<AxiosResponse<any>>;
 }
@@ -21,9 +22,11 @@ const instance = axios.create({
 const api: Api = {
   getReportsData: () => instance.get("/reports"),
   getTeamData: () => instance.get("/team/all"),
+
   getMatchData: () => instance.get("/match/all"),
   deleteTeam: (id: number) => instance.delete(`/team/${id}`),
   deleteMatch: (id: number) => instance.delete(`/match/${id}`),
+  addTeam: (teamData: TeamData) => instance.post("/team", teamData),
 };
 
 export default api;
