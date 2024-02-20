@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { MatchData } from "../interfaces/MatchData";
+import { MatchRequestData } from "../interfaces/MatchRequestData";
 import { ReportsData } from "../interfaces/ReportsData";
 import { TeamData } from "../interfaces/TeamData";
 
@@ -10,7 +11,9 @@ interface Api {
   deleteTeam: (id: number) => Promise<AxiosResponse<any>>;
   getTeamData: () => Promise<AxiosResponse<TeamData[]>>;
   addTeam: (teamData: TeamData) => Promise<AxiosResponse<any>>;
+  getMatchDataById: (id: number) => Promise<AxiosResponse<MatchData>>;
   getMatchData: () => Promise<AxiosResponse<MatchData[]>>;
+  addMatch: (matchData: MatchRequestData) => Promise<AxiosResponse<any>>;
   deleteMatch: (id: number) => Promise<AxiosResponse<any>>;
 }
 
@@ -29,7 +32,9 @@ const api: Api = {
   getTeamDataById: (id: number) => instance.get(`/team/${id}`),
   deleteTeam: (id: number) => instance.delete(`/team/${id}`),
   deleteMatch: (id: number) => instance.delete(`/match/${id}`),
+  getMatchDataById: (id: number) => instance.get(`/match/${id}`),
   addTeam: (teamData: TeamData) => instance.post("/team", teamData),
+  addMatch: (matchData: MatchRequestData) => instance.post("/match", matchData),
 };
 
 export default api;
